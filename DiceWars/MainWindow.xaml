@@ -1,4 +1,4 @@
-﻿<Window x:Class="DiceWars.MainWindow"
+﻿<ui:DWWindow x:Class="DiceWars.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:DiceWars"
         xmlns:ui="clr-namespace:DiceWars.UiElements"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <ui:TileUi x:Name="testTile" Height="200" Width="400"/>
-    </Grid>
-</Window>
+        Title="MainWindow" 
+        Height="800" 
+        Width="1000"
+        Background="Black">
+    <ui:DWDockPanel>
+        <ui:GameUi x:Name="testGame"/>
+    </ui:DWDockPanel>
+</ui:DWWindow>

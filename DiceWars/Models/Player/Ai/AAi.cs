@@ -9,6 +9,21 @@ namespace DiceWars.Models
             AiType = type;
         }
 
-        public AiType AiType { get; set; }
+        private AiType aiType;
+        public AiType AiType
+        {
+            get
+            {
+                return aiType;
+            }
+            set
+            {
+                if (value != aiType)
+                {
+                    aiType = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
     }
 }

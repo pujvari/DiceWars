@@ -1,50 +1,63 @@
 ﻿using DiceWars.Models;
-using System.ComponentModel;
-using System.Windows.Controls;
+using DiceWars.Providers;
+using System;
 using System.Windows.Media;
 
 namespace DiceWars.UiElements
 {
-    /// <summary>
-    /// Interaction logic for TileUi.xaml
-    /// </summary>
-    public partial class TileUi : UserControl, INotifyPropertyChanged
+    public partial class TileUi : ABaseUi
     {
         public TileUi()
         {
             InitializeComponent();
+            DataContext = this;
+            TileProvider.IsSelectedChanged += TileSelectionChanged;
         }
 
-        public Tile Tile { get; set; }
-
-        public Brush Color 
+        public Tile tile;
+        public Tile Tile
         {
             get
             {
-                return Tile.Owner.Color;
+                return tile;
             }
             set
             {
-                Tile.Owner.Color = value;
-                RaisePropertyChanged("TextInViewModel");
-            }
-        }
-        public int CountOfDices
-        {
-            get
-            {
-                return Tile.Dices.Count;
+                if (value != tile)
+                {
+                    tile = value;
+                    NotifyPropertyChanged();
+                    InitTile();
+                }
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void RaisePropertyChanged(string prop)
+        private void TileSelectionChanged(object sender, EventArgs e)
         {
-            if (PropertyChanged != null)
+            InitTile();
+        }
+
+        private void InitTile()
+        {
+            if (Tile.Type == Models.Player.Enums.TileType.UnPlayable)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                button.Background = Brushes.Gray;
+                button.Content = null;
+                button.IsEnabled = false;
             }
+            else
+            {
+                button.Background = Tile?.Owner?.Color;
+                button.Content = Tile?.Dices?.Count;
+                button.IsEnabled = true;
+                button.Opacity = Tile.IsSelected ? 0.5 : 1.0;
+            }
+        }
+
+        private void button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TileProvider.SelectTile(tile);
+            InitTile();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace DiceWars.Models
 {
-    public class Step
+    public class Step : ABase
     {
     }
 }

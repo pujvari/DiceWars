@@ -4,20 +4,20 @@
     {
         public enum PlayerType : int
         {
-            Human = 0,
-            Ai=1,
+            Human = 1,
+            Ai=2,
         };
         public enum AiType : int
         {
-            Noob = 0,
-            Normal = 1,
-            Pro = 1,
+            Noob = 1,
+            Normal = 2,
+            Pro = 3,
         };
 
         public enum TileType : int
         {
-            UnPlayable = 0,
-            Playable = 1,
+            UnPlayable = 1,
+            Playable = 2,
         };
     }
 }

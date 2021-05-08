@@ -2,9 +2,9 @@
 
 namespace DiceWars.Models
 {
-    public class Dice
+    public class Dice : ABase
     {
-        public Dice()
+        public Dice() : base()
         {
 
         }

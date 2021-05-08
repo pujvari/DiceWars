@@ -1,34 +1,41 @@
 ﻿using DiceWars.Models;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
+using DiceWars.Providers;
+using DiceWars.UiElements;
+using System;
 
 namespace DiceWars
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        private static int sanyi = 0;
-        public MainWindow()
-        {
-            InitializeComponent();
+	public partial class MainWindow : DWWindow
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
+			DataContext = this;
 
-            testTile.Tile = new Tile(1)
-            {
-                Owner = new Human(1) { Color = Brushes.AliceBlue},
-                Dices = new List<Dice>() { new Dice()}
-            };
+			//testBoard.Board = testBoardInit();
+			testGame.Game = testGameInit();
+		}
 
-            if (sanyi == 0)
-            {
-                sanyi++;
-                MainWindow newWindow = new MainWindow();
-                Application.Current.MainWindow = newWindow;
-                newWindow.Show();
-                this.Close();
-            }
-        }
-    }
+		private Game testGameInit()
+		{
+			int numberOfAiPlayers = GetNumberOfAiPlayers();
+			int totalPlayers = numberOfAiPlayers + 1;
+
+			PlayerProvider.GetHuman();
+
+			int counter = 2;
+			while (numberOfAiPlayers > counter - 2)
+			{
+				PlayerProvider.GetRandomAi(counter);
+				counter++;
+			}
+
+			return new Game(10,10, totalPlayers);
+		}
+
+		private int GetNumberOfAiPlayers()
+		{
+			return 4;
+		}
+	}
 }

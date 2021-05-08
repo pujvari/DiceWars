@@ -1,18 +1,48 @@
 ﻿using DiceWars.Models;
-using System.Windows.Controls;
+using DiceWars.Providers;
+using System;
 
 namespace DiceWars.UiElements
 {
-    /// <summary>
-    /// Interaction logic for GameUi.xaml
-    /// </summary>
-    public partial class GameUi : UserControl
+    public partial class GameUi : ABaseUi
     {
         public GameUi()
         {
             InitializeComponent();
+            DataContext = this;
+            TileProvider.IsSelectedChanged += TileSelectionChanged;
         }
 
-        public Game Game { get; set; }
+        private void TileSelectionChanged(object sender, EventArgs e)
+        {
+            RefreshGame();
+        }
+
+        public Game game;
+        public Game Game
+        {
+            get
+            {
+                return game;
+            }
+            set
+            {
+                if (value != game)
+                {
+                    game = value;
+                    NotifyPropertyChanged();
+                    RefreshGame();
+                }
+            }
+        }
+
+        public void RefreshGame()
+        {
+            boardUi.board = Game.Board;
+            boardUi.RefreshBoard();
+
+            foreach (var player in Game.Players)
+                playersStackPanel.Children.Add(new PlayerUi() { Player = player,Width = 200, Height=100 });
+        }
     }
 }

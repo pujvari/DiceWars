@@ -1,15 +1,11 @@
-﻿using System.Windows.Controls;
-
-namespace DiceWars.UiElements
+﻿namespace DiceWars.UiElements
 {
-    /// <summary>
-    /// Interaction logic for MainMenu.xaml
-    /// </summary>
-    public partial class MainMenuUi : UserControl
+    public partial class MainMenuUi : ABaseUi
     {
         public MainMenuUi()
         {
             InitializeComponent();
+            DataContext = this;
         }
     }
 }
